@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"os"
 	"runtime"
@@ -63,7 +64,7 @@ func (l log) Debugf(m string, v ...interface{}) {
 	filename := file[strings.LastIndex(file, "/")+1:] + ":" + strconv.Itoa(line)
 	funcname := runtime.FuncForPC(pc).Name()
 	fn := funcname[strings.LastIndex(funcname, ".")+1:]
-	l.WithField("file", filename).WithField("function", fn).Debugf(m, v)
+	l.WithField("file", filename).WithField("function", fn).Debug(fmt.Sprintf(m, v...))
 }
 
 func (l log) Error(m interface{}) {
@@ -79,7 +80,7 @@ func (l log) Errorf(m string, v ...interface{}) {
 	filename := file[strings.LastIndex(file, "/")+1:] + ":" + strconv.Itoa(line)
 	funcname := runtime.FuncForPC(pc).Name()
 	fn := funcname[strings.LastIndex(funcname, ".")+1:]
-	l.WithField("file", filename).WithField("function", fn).Errorf(m, v)
+	l.WithField("file", filename).WithField("function", fn).Error(fmt.Sprintf(m, v...))
 }
 
 func (l log) Info(m interface{}) {
@@ -87,7 +88,7 @@ func (l log) Info(m interface{}) {
 }
 
 func (l log) Infof(m string, v ...interface{}) {
-	l.Infof(m, v)
+	l.Logger.Info(fmt.Sprintf(m, v...))
 }
 
 
